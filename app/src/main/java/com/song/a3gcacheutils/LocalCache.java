@@ -15,10 +15,10 @@ import java.io.IOException;
  * Created by song on 2018/6/30.
  * Email：815464927@qq.com
  */
-public class LocalCacheUtils {
+public class LocalCache {
 
     private Context mContext;
-    public LocalCacheUtils(Context ctx){
+    public LocalCache(Context ctx){
         mContext = ctx;
     }
     /**
@@ -80,7 +80,7 @@ public class LocalCacheUtils {
     private String getCachePath(){
         String state = Environment.getExternalStorageState();
         String path = "LocalCache/"+mContext.getPackageName()+"/data";
-        File dir = null;
+        File dir;
         if(!TextUtils.isEmpty(state) && Environment.MEDIA_MOUNTED.equals(state)){
             //has sdCard
             dir = new File(Environment.getExternalStorageDirectory(),path);

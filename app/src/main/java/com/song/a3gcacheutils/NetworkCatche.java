@@ -14,14 +14,14 @@ import java.net.URL;
  * Created by song on 2018/6/30.
  * Email：815464927@qq.com
  */
-public class NetCatcheUtils {
+public class NetworkCatche {
 
-    private MemoryCacheUtils mMemoryCacheUtils;
-    private LocalCacheUtils mLocacheUtils;
+    private MemoryCache mMemoryCache;
+    private LocalCache mLocache;
 
-    public NetCatcheUtils(MemoryCacheUtils memoryCacheUtils, LocalCacheUtils localCacheUitls) {
-        mMemoryCacheUtils = memoryCacheUtils;
-        mLocacheUtils = localCacheUitls;
+    public NetworkCatche(MemoryCache memoryCache, LocalCache localCache) {
+        mMemoryCache = memoryCache;
+        mLocache = localCache;
     }
 
     public void getBitmapFromNet(ImageView iv, String url) {
@@ -65,9 +65,9 @@ public class NetCatcheUtils {
                 Log.d("song--->","first get data form net");
 
                 //add cache to Local
-                mLocacheUtils.setBitmapCacheFromLocal(url,bitmap);
+                mLocache.setBitmapCacheFromLocal(url,bitmap);
                 //add cache to memory
-                mMemoryCacheUtils.setBitmapCacheFromMemory(url,bitmap);
+                mMemoryCache.setBitmapCacheFromMemory(url,bitmap);
             }
         }
     }

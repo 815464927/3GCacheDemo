@@ -10,35 +10,35 @@ import android.widget.ImageView;
  * Created by song on 2018/6/30.
  * Email：815464927@qq.com
  */
-public class MyBitmapUtils {
+public class ThreeLevelCache {
 
-    private static MyBitmapUtils mInstance;
-    private NetCatcheUtils mNetCatcheUitls;
-    private LocalCacheUtils mLocalCacheUitls;
-    private MemoryCacheUtils mMemoryCacheUtils;
+    private static ThreeLevelCache mInstance;
+    private NetworkCatche mNetworkCatche;
+    private LocalCache mLocalCache;
+    private MemoryCache mMemoryCache;
 
-    public static MyBitmapUtils instance(Context context){
+    public static ThreeLevelCache instance(Context context){
         if(null == mInstance){
-            synchronized (MyBitmapUtils.class){
+            synchronized (ThreeLevelCache.class){
                 if(null == mInstance) {
-                    mInstance = new MyBitmapUtils(context);
+                    mInstance = new ThreeLevelCache(context);
                 }
             }
         }
         return mInstance;
     }
 
-    private MyBitmapUtils(Context context){
-        mMemoryCacheUtils = new MemoryCacheUtils();
-        mLocalCacheUitls = new LocalCacheUtils(context);
-        mNetCatcheUitls = new NetCatcheUtils(mMemoryCacheUtils,mLocalCacheUitls);
+    private ThreeLevelCache(Context context){
+        mMemoryCache = new MemoryCache();
+        mLocalCache = new LocalCache(context);
+        mNetworkCatche = new NetworkCatche(mMemoryCache,mLocalCache);
     }
 
     public void display(ImageView iv, String url){
         iv.setImageResource(R.mipmap.ic_launcher);
         Bitmap bm;
         //get cache form memory
-        bm = mMemoryCacheUtils.getBitmapCacheFromMemory(url);
+        bm = mMemoryCache.getBitmapCacheFromMemory(url);
         if(null != bm){
             iv.setImageBitmap(bm);
             Log.d("song--->","get cache form memory");
@@ -46,7 +46,7 @@ public class MyBitmapUtils {
         }
 
         //get cache form local
-        bm = mLocalCacheUitls.getBitmapCacheFromLocal(url);
+        bm = mLocalCache.getBitmapCacheFromLocal(url);
         if(null != bm){
             iv.setImageBitmap(bm);
             Log.d("song--->","get cache form local");
@@ -54,7 +54,7 @@ public class MyBitmapUtils {
         }
 
         //get cache form net
-        mNetCatcheUitls.getBitmapFromNet(iv,url);
+        mNetworkCatche.getBitmapFromNet(iv,url);
     }
 
 }

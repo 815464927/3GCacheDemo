@@ -14,6 +14,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mIv = findViewById(R.id.iv);
-        MyBitmapUtils.instance(this).display(mIv,url);
+        ThreeLevelCache.instance(this).display(mIv,url);
     }
 }

@@ -8,11 +8,11 @@ import android.util.LruCache;
  * Created by song on 2018/6/30.
  * Email：815464927@qq.com
  */
-public class MemoryCacheUtils {
+public class MemoryCache {
 
     private LruCache<String,Bitmap> mLruCach;
 
-    public MemoryCacheUtils(){
+    public MemoryCache(){
         long maxMemory = Runtime.getRuntime().maxMemory()/8;
         mLruCach = new LruCache<String, Bitmap>((int)maxMemory){
             @Override
