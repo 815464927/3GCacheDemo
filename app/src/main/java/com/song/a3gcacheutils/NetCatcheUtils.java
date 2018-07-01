@@ -89,7 +89,11 @@ public class NetCatcheUtils {
 
             int responseCode = conn.getResponseCode();
             if(200 == responseCode){//200 == request  respon ok
-                return BitmapFactory.decodeStream(conn.getInputStream());
+                //压缩图片
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;//取样压缩原来的1/2
+                options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+                return BitmapFactory.decodeStream(conn.getInputStream(),null,options);
             }
 
         } catch (IOException e) {

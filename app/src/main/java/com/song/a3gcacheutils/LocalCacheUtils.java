@@ -8,8 +8,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by song on 2018/6/30.
@@ -31,7 +31,10 @@ public class LocalCacheUtils {
         try {
             name = MD5Encoder.encode(url);
             File file = new File(getCachePath(),name);
-            return BitmapFactory.decodeStream(new FileInputStream(file));
+            if(file.exists()) {
+                //return BitmapFactory.decodeStream(new FileInputStream(file));
+                return BitmapFactory.decodeFile(file.getAbsolutePath());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,7 +48,9 @@ public class LocalCacheUtils {
      */
     public void setBitmapCacheFromLocal(String url, Bitmap bitmap) {
 
-        String name = null;
+        String name ;
+        FileOutputStream fos = null;
+
         try {
             name = MD5Encoder.encode(url);
             File file = new File(getCachePath(),name);
@@ -53,10 +58,17 @@ public class LocalCacheUtils {
             if(!parentFile.exists())
                 parentFile.mkdirs();
             //save bitmap to local file
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,new FileOutputStream(file));
+            fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
             Log.d("song--->","save cache to local");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
